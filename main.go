@@ -23,11 +23,11 @@ func Write(in, out []interface{}, path string) {
 	}
 
 	for i := 0; i < len(in); i++ {
-		go export(path+"/in/input"+string(i+1)+".txt", fmt.Sprintf("%v", in[i]))
+		go export(fmt.Sprintf("%s/in/input%d.txt", path, (i+1)), fmt.Sprintf("%v", in[i]))
 	}
 
 	for i := 0; i < len(out); i++ {
-		go export(path+"/out/output"+string(i+1)+".txt", fmt.Sprintf("%v", out[i]))
+		go export(fmt.Sprintf("%s/out/output%d.txt", path, (i+1)), fmt.Sprintf("%v", out[i]))
 	}
 }
 
