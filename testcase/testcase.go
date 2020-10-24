@@ -30,7 +30,7 @@ func (T *TestCase) Write(path string) error {
 	}
 
 	for i, input := range *T.in {
-		go export(fmt.Sprintf("%s/in/input%d.txt", path, i+1), input.([]interface{}))
+		export(fmt.Sprintf("%s/in/input%d.txt", path, i+1), input.([]interface{}))
 	}
 
 	err = os.Mkdir(path+"/out", 0755)
@@ -39,7 +39,7 @@ func (T *TestCase) Write(path string) error {
 	}
 
 	for i, output := range *T.out {
-		go export(fmt.Sprintf("%s/out/output%d.txt", path, i+1), output.([]interface{}))
+		export(fmt.Sprintf("%s/out/output%d.txt", path, i+1), output.([]interface{}))
 	}
 	return nil
 }
@@ -61,7 +61,7 @@ func export(path string, data []interface{}) {
 	defer f.Close()
 
 	for i := 0; i < len(data); i++ {
-		_, err = f.WriteString(fmt.Sprintf("%v\n", data[i]))
+		_, err = f.Write([]byte(fmt.Sprintf("%v\n", data[i])))
 		if err != nil {
 			log.Panicf("error while creating %s: %s", path, err.Error())
 		}
